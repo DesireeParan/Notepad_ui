@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>MP 1st Project - Notepad</title>
+</head>
+<body>
+    <div class="container">
+        <div class="notepad">
+            <h2>Desiree's Notepad</h2>
+            <nav class="navbar">
+                <ul>
+                    <li id="saveBtn" onclick="saveFunction()"><i class="fa-regular fa-floppy-disk"></i></li>
+                    <li onclick="undoFunction()"><i class="fa-solid fa-rotate-left"></i></li>
+                    <li onclick="redoFunction()"><i class="fa-solid fa-arrow-rotate-right"></i></li> 
+                    <li onclick="printFunction()"><i class="fa-solid fa-print"></i></li>
+                </ul>
+            </nav>
+
+            <div class="main-content">
+                <!-- Note-taking area -->
+                <textarea id="noteContent" placeholder="Start typing..." 
+                spellcheck="false"></textarea>
+            </div>
+        </div>
+        <div class="notes" >
+            <div class="notes-header">
+                <!-- Notes content -->
+                <marquee behavior="scroll" direction="left" scrollamount="10">Breaking News: Sinipag si Maymay at gumawa ng Mini Project after 10 years! Anong nakain mo?...</marquee>
+            </div>
+            <div>
+                <div class="notes-content">
+                    <!-- <h3>Notes</h3> -->
+                    <nav class="navbar">
+                        <ul>
+                            <li onclick="newFunction()"><i class="fa-solid fa-plus"></i></li>
+                            <li onclick="printFunction()"><i class="fa-solid fa-print"></i></li>
+                        </ul>
+                    </nav>
+                    <div>
+                        <ul class="note-card" id="notesList">
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 1')"><i class="fa-regular fa-note-sticky"></i> Note 1</li>
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 2')"><i class="fa-regular fa-note-sticky"></i> Note 2</li>
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 3')"><i class="fa-regular fa-note-sticky"></i> Note 3</li>
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 4')"><i class="fa-regular fa-note-sticky"></i> Note 4</li>
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 5')"><i class="fa-regular fa-note-sticky"></i> Note 5</li>
+                            <li class="note-item" id="note1" onclick="openNoteModal('Note 6')"><i class="fa-regular fa-note-sticky"></i> Note 6</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="assets/runningcat.gif"></img>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="customModal">
+            <img src="assets/printer.gif" alt="Print Icon" class="print-icon"></img>
+            <p>Print button clicked!</p>
+            <button id="closeModal">Close</button>
+        </div>
+        <div id="noteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeNoteModal()">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <p id="modalBody">This is the content of the note.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+    <!-- <div class="tenor-gif-embed" data-postid="26404302" data-share-method="host" data-aspect-ratio="1" data-width="60%"></div> -->
+    <!-- <script type="text/javascript" async src="https://tenor.com/embed.js"></script> -->
