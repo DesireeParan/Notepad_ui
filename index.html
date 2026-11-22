@@ -3,77 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Desiree's Notepad</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>MP 1st Project - Notepad</title>
 </head>
 <body>
-    <div class="container">
-        <div class="notepad">
-            <h2>Desiree's Notepad</h2>
-            <nav class="navbar">
-                <ul>
-                    <li id="saveBtn" onclick="saveFunction()"><i class="fa-regular fa-floppy-disk"></i></li>
-                    <li onclick="undoFunction()"><i class="fa-solid fa-rotate-left"></i></li>
-                    <li onclick="redoFunction()"><i class="fa-solid fa-arrow-rotate-right"></i></li> 
-                    <li onclick="printFunction()"><i class="fa-solid fa-print"></i></li>
-                </ul>
-            </nav>
-
-            <div class="main-content">
-                <!-- Note-taking area -->
-                <textarea id="noteContent" placeholder="Start typing..." 
-                spellcheck="false"></textarea>
-            </div>
+    <header class="topbar">
+        <div class="brand-wrap">
+            <h1 class="brand editable" id="brand" tabindex="0" role="button" title="Click to rename" aria-label="Notepad name, click to rename"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> <span id="brandText">Desiree's Notepad</span></h1>
+            <input class="brand-input" id="brandInput" type="text" maxlength="30" placeholder="Name your notepad" aria-label="Notepad name" hidden>
         </div>
-        <div class="notes" >
-            <div class="notes-header">
-                <!-- Notes content -->
-                <marquee behavior="scroll" direction="left" scrollamount="10">Breaking News: Sinipag si Maymay at gumawa ng Mini Project after 10 years! Anong nakain mo?...</marquee>
+        <div class="ticker-wrap">
+            <div class="ticker editable" id="ticker" tabindex="0" role="button" title="Click to edit" aria-label="News ticker, click to edit">
+                <p class="ticker-text" id="tickerText">Breaking News: Sinipag si Maymay at gumawa ng Mini Project after 10 years! Anong nakain mo?...</p>
             </div>
-            <div>
-                <div class="notes-content">
-                    <!-- <h3>Notes</h3> -->
-                    <nav class="navbar">
-                        <ul>
-                            <li onclick="newFunction()"><i class="fa-solid fa-plus"></i></li>
-                            <li onclick="printFunction()"><i class="fa-solid fa-print"></i></li>
-                        </ul>
-                    </nav>
-                    <div>
-                        <ul class="note-card" id="notesList">
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 1')"><i class="fa-regular fa-note-sticky"></i> Note 1</li>
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 2')"><i class="fa-regular fa-note-sticky"></i> Note 2</li>
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 3')"><i class="fa-regular fa-note-sticky"></i> Note 3</li>
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 4')"><i class="fa-regular fa-note-sticky"></i> Note 4</li>
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 5')"><i class="fa-regular fa-note-sticky"></i> Note 5</li>
-                            <li class="note-item" id="note1" onclick="openNoteModal('Note 6')"><i class="fa-regular fa-note-sticky"></i> Note 6</li>
-                        </ul>
-                    </div>
-                    <div class="image-container">
-                        <img src="assets/runningcat.gif"></img>
-                    </div>
+            <input class="ticker-input" id="tickerInput" type="text" maxlength="200" placeholder="Type your headline, then press Enter" aria-label="Ticker text" hidden>
+        </div>
+    </header>
+
+    <div class="app">
+        <!-- Sidebar: list of notes -->
+        <aside class="sidebar" aria-label="Your notes">
+            <div class="sidebar-head">
+                <button class="btn btn-primary btn-block" id="newBtn" type="button">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> New note
+                </button>
+                <label class="search">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    <input id="searchInput" type="search" placeholder="Search notes..." autocomplete="off" aria-label="Search notes">
+                </label>
+            </div>
+
+            <ul class="note-list" id="notesList"></ul>
+            <p class="empty-hint" id="emptyHint" hidden>No notes match your search.</p>
+
+            <img class="mascot" src="assets/runningcat.gif" alt="" aria-hidden="true">
+        </aside>
+
+        <!-- Editor -->
+        <main class="editor">
+            <div class="editor-head">
+                <input id="titleInput" class="title-input" type="text" placeholder="Untitled note" maxlength="60" aria-label="Note title">
+
+                <div class="toolbar" role="toolbar" aria-label="Note actions">
+                    <button class="btn btn-icon" id="saveBtn" type="button" title="Save (Ctrl+S)" aria-label="Save">
+                        <i class="fa-regular fa-floppy-disk" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-icon" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo">
+                        <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-icon" id="redoBtn" type="button" title="Redo (Ctrl+Y)" aria-label="Redo">
+                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-icon" id="printBtn" type="button" title="Print" aria-label="Print">
+                        <i class="fa-solid fa-print" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-icon btn-danger" id="deleteBtn" type="button" title="Delete note" aria-label="Delete note">
+                        <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div id="customModal">
-            <img src="assets/printer.gif" alt="Print Icon" class="print-icon"></img>
-            <p>Print button clicked!</p>
-            <button id="closeModal">Close</button>
-        </div>
-        <div id="noteModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeNoteModal()">&times;</span>
-                <h2 id="modalTitle"></h2>
-                <p id="modalBody">This is the content of the note.</p>
-            </div>
-        </div>
+
+            <textarea id="noteContent" placeholder="Start typing..." spellcheck="false" aria-label="Note content"></textarea>
+
+            <footer class="statusbar">
+                <span id="stats">0 words · 0 chars</span>
+                <span id="saveStatus" aria-live="polite">Saved</span>
+            </footer>
+        </main>
     </div>
+
+    <!-- Confirmation dialog -->
+    <dialog class="dialog" id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmMsg">
+        <form method="dialog">
+            <img class="dialog-img" src="assets/wow.gif" alt="">
+            <h2 class="dialog-title" id="confirmTitle">Delete note?</h2>
+            <p class="dialog-msg" id="confirmMsg"></p>
+            <div class="dialog-actions">
+                <button class="btn" id="confirmCancel" type="submit" value="cancel" autofocus>Cancel</button>
+                <button class="btn btn-danger-solid" id="confirmOk" type="submit" value="ok">
+                    <i class="fa-regular fa-trash-can" aria-hidden="true"></i> Delete
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Feedback toast (replaces the old blocking modal) -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <img id="toastImg" src="assets/dancecat.gif" alt="">
+        <p id="toastMsg"></p>
+    </div>
+
+    <!-- Only visible when printing -->
+    <article class="print-area" id="printArea" aria-hidden="true">
+        <h1 id="printTitle"></h1>
+        <div id="printBody"></div>
+    </article>
+
     <script src="script.js"></script>
 </body>
 </html>
-    <!-- <div class="tenor-gif-embed" data-postid="26404302" data-share-method="host" data-aspect-ratio="1" data-width="60%"></div> -->
-    <!-- <script type="text/javascript" async src="https://tenor.com/embed.js"></script> -->
